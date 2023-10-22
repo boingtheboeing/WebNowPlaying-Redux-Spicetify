@@ -1,28 +1,30 @@
 /* global Spicetify */
-import { WNPRedux } from './sockets'
-import { openSettingsPanel, openWarningPanel } from './ui'
-import { WebNowPlayingSVG } from './utils/misc'
+import { WNPRedux } from "./sockets";
+import { openSettingsPanel, openWarningPanel } from "./ui";
+import { WebNowPlayingSVG } from "./utils/misc";
 
-let wnpRedux: WNPRedux
-export const getWNPRedux = () => wnpRedux
+let wnpRedux: WNPRedux;
+export const getWNPRedux = () => wnpRedux;
 
 async function main() {
   while (!Spicetify?.Platform || !Spicetify?.CosmosAsync || !Spicetify?.Player)
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
   // Show warning if legacy webnowplaying.js is installed
   if (document.querySelector('script[src*="webnowplaying.js"]')) {
-    openWarningPanel()
-    return
+    openWarningPanel();
+    return;
   }
 
-  wnpRedux = new WNPRedux()
+  console.log("Hi, from WNP");
+
+  wnpRedux = new WNPRedux();
   new Spicetify.Menu.Item(
-    'WebNowPlaying',
+    "WebNowPlaying",
     false,
     () => openSettingsPanel(),
     WebNowPlayingSVG
-  ).register()
+  ).register();
 }
 
-export default main
+export default main;
